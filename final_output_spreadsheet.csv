@@ -1,2 +1,6 @@
 market_date,closing_price_pence,trading_volume,avg_daily_carbon_intensity,primary_emission_rating
-2026-10-01,1134.0,12733922,116.0,moderate
+2026-09-29,1123.0,9020187,100.65,moderate
+2026-09-30,1145.5,14884376,104.69,low
+2026-09-24,1135.5,15328647,134.33,moderate
+2026-09-28,1127.5,10134005,179.94,high
+2026-09-25,1127.0,7811131,142.23,moderate
