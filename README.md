@@ -1,26 +1,62 @@
-# UK Energy Grid Climate Risk Exposure & Financial Performance Pipeline
+# My Data School Application: Climate Risk & Energy Markets
 
-A production-ready data engineering pipeline designed to evaluate how real-time climate risk factors correlate with the equity market performance of major UK energy infrastructure operators. 
+## About Me
+I'm Sasha. I studied Business with Finance at Bayes Business School, and this is my application project for the Data Engineering Consultant role at The Data School. Python was new to me until my AI and Big Data module. I had never used VS Code or Git before this project either. My dissertation on climate risk disclosure in UK energy firms got me interested in energy data, so I picked a subject I actually wanted to dig into.
 
-## 👤 About Me & Project Motivations
-My academic dissertation directly investigated whether **climate risk disclosure affects the financial performance of UK energy firms**. While that research relied on historical corporate reporting documents, this project adapts that exact business logic into an automated, modern data pipeline. 
+## Why I Am Applying to The Data School
+I am applying for the Data Engineer role at The Information Lab because I want to create projects that have a valuable, real-world impact on their audience. I want to keep challenging myself with difficult tasks, and see how I learn to adapt and thrive in fast-paced environments. 
+While my background is in Business and Finance, I had some experience working with data, but never to this structural extent. That changed when I chose the Business and Financial Analytics module, which introduced me to econometrics, and the AI and Big Data module, which introduced me to Python. These two experiences pushed me completely out of my comfort zone. Suddenly, I found myself staring at a screen full of technical challenges far beyond my current skillset. Instead of backing away, I embraced the learning curve, accepted every technical pushback as a lesson, and succeeded in both projects. This momentum directly inspired my final-year dissertation, where I independently conducted deep data analysis powered by Python scripts.
 
-I am applying to the **Data Engineer position at The Information Lab / The Data School** to bridge the gap between financial risk theory and production-grade data automation. I chose this architecture to showcase my ability to ingest disparate web data feeds, handle real-world API anomalies, model structures in a local database engine, and serve clean metrics for downstream analytics.
+## The Purpose of My Project
+In my final year of university, I took a deep interest in climate change after picking it as an elective. This inspired my dissertation on whether climate risk disclosure affects the financial performance of UK-listed energy firms. I wanted to stick to my passion and use this data school application to see if real-time carbon emissions from the UK power grid actually align with stock market shifts for major energy operators. 
 
----
-
-## 🎯 Target Audience & Problem Solved
-*   **Target Audience:** ESG (Environmental, Social, and Governance) Investment Analysts at UK Asset Management Firms.
-*   **The Problem:** ESG analysts want to know if carbon emissions spike or drop at the exact same moments an energy operator's stock valuation shifts. However, tracking this manually is difficult because grid emissions update every 30 minutes, whereas equity assets update once per day on the London Stock Exchange.
-*   **The Solution:** This pipeline automatically extracts half-hourly carbon intensities, transforms them into a structured model, down-samples the granularity into daily averages, and merges them alongside live closing prices into a single, clean analytic dataset.
-
----
-
-## 🔌 Data Sources & Ingestion Framework
-This application is completely self-contained and pulls data entirely from free, public endpoints without requiring paid subscription keys:
-1.  **Climate Feed:** [National Grid ESO Carbon Intensity API](https://carbonintensity.org.uk) – Delivers half-hourly actual and forecast carbon intensity (gCO₂/kWh) for the UK electricity grid.
-2.  **Financial Feed:** [Yahoo Finance API Engine](https://pypi.org) – Downloads live and historical market equity indices for National Grid plc (`NG.L`) trading on the London Stock Exchange.
+* **The Audience:** This tool is built for Green Investment Analysts who need to track everyday grid emissions alongside live stock valuations.
+* **The Problem It Solves:** Carbon data updates every 30 minutes, but stock prices only update once a day. This pipeline blends those two completely different schedules into one clean spreadsheet grid.
 
 ---
 
-## 🛠️ Data Pipeline Architecture
+## How My Pipeline Works (Architecture)
+I built this automation system across four separate Python files:
+1. `extract.py`: Reaches out over the internet to the **National Grid Carbon API** and downloads an uncut, raw copy of the live emissions data.
+2. `transform.py`: Cleans up formatting errors, fixes mismatched dates, and locks the clean data rows inside a local **DuckDB** database cabinet.
+3. `fetch_finance.py`: Connects directly to the London Stock Exchange feed using the **yfinance** tool to pull live closing stock prices for National Grid plc (`NG.L`).
+4. `merge_data.py`: Averages the 30-minute climate rows into a single daily score and merges them perfectly next to that day's closing stock price.
+
+---
+
+## How to Run It from a Clean Clone
+Anyone can run this entire pipeline on their computer right out of the box. 
+
+1. Install the toolkits in your terminal:
+`python -m pip install requests duckdb pandas yfinance`
+
+2. Run the files in order:
+`python extract.py`
+`python transform.py`
+`python fetch_finance.py`
+`python merge_data.py`
+
+You can instantly look at the visual data table output by clicking on the `final_output_spreadsheet.csv` file right here in this repository!
+
+---
+
+## 📊 Visible Output: Processed Analytical Dataset
+
+The complete running dataset is exported and available directly inside the root file: [`final_output_spreadsheet.csv`](./final_output_spreadsheet.csv).
+
+Below is a live structural preview of the combined columns and rows generated by the pipeline execution:
+
+| market_date | closing_price_pence | trading_volume | avg_daily_carbon_intensity | primary_emission_rating |
+| :--- | :--- | :--- | :--- | :--- |
+| 2026-10-01 | 1141.50 | 2402176 | 116.00 | moderate |
+
+---
+
+## 🔮 Future Improvements
+If I had more time to expand this project, I would build an automated daily alert email system that triggers a notification if carbon intensity levels spike beyond a specific safe threshold.
+
+## 🤖 How AI Helped Me Learn
+As someone completely new to engineering tools, I initially had zero experience using VS Code or version control systems like Git. I used AI as an interactive, 1-on-1 coding tutor to onboard myself onto these professional platforms. It helped me understand:
+* How to correctly download and configure VS Code, Python installations, and Git paths cleanly within the Windows environment system settings.
+* How to interpret terminal output error logs and navigate command-line directories.
+* How to solve tricky network execution blockers, such as passing custom text headers to stop external APIs from serving unreadable HTML code blocks instead of data packets.
